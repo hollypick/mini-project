@@ -1,0 +1,23 @@
+---
+title: "hello help"
+format: html
+---
+
+# Header one
+
+I would like something to sort this out and turn her into a big old fancy website!
+
+```{r}
+my_variable <- 3
+install.packages("ggplot2")
+ggplot(data = iris,
+       aes(x = Species, y = Sepal.Width, fill = Species)) +
+  geom_boxplot(
+    fill = c('#2f2442', '#895fad', '#d498ed'),
+    colour = 'black'
+  ) +
+  labs( title = ' Sepal width across species of pretty iris',
+        x = ' species type',
+        y = ' sepal width ')
+
+```
