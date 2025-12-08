@@ -23,11 +23,23 @@ My aim for this visualisation is to:
 
 The data was sourced online through ( Load in the repository for github that has since gone, explain how and why its gone etc and upload the excel file that I grabbed from git anyways ).
 
+```{r setup, include=FALSE}
+# Set global chunk options
+knitr::opts_chunk$set(
+  echo = TRUE,      # Show code in HTML
+  warning = FALSE,  # Hide warnings
+  message = FALSE   # Hide package messages
+)
+
+```
+
 ```{r}
+
 # Load in libraries
 library(ggalluvial)
 library(tidyverse)
 library(ggplot2)
+library(plotly)
 library(readxl)
 library(dplyr)
 ```
@@ -37,16 +49,23 @@ library(dplyr)
 The data contains 3 sheets - total ranking by year, oversea ranking and regional ranking. I am interested in the regional rankings, as it contains the year, country, character and rank. I filtered out countries aside from South Korea, China, Taiwan, USA and UK as I felt that these were accurate representations of Sanrio's fanbase.
 
 ```{r}
+#Loading the data in
 sanriocharacterranking <- read_excel("~/my6422worksheets/sanriocharacterranking.xlsx", 
                                      sheet = 3)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Seperating only the countries I want to look into
 
-countries <- c('United Kingdom', 'United States', 'Taiwan', 'China', 'South Korea') # Removing excess countries to avoid a cluttered visualisation
+countries <- c('United Kingdom', 'United States', 'Taiwan', 'China', 'South Korea')
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#Cleaning the data, changing the name of the 'country/region' variable and removing ranks higher than 3.
 
 sanrio_clean <- sanriocharacterranking %>% 
   select(year, character, country = `country/region`, ranking) %>% 
-  filter( # Removing data from 2018 and 2019, as these are not consistent with later data.
-         ranking < 4, # Removing rankings other than top 3, again to keep consistency and a clean visualisation. 
+  filter( ranking < 4,
          country %in% countries)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#Just checking it's all in order
+glimpse(sanrio_clean)
 
 
 ```
@@ -56,6 +75,7 @@ sanrio_clean <- sanriocharacterranking %>%
 With this cleaned data, I first wanted to create an alluvial plot with seperate facets for each country. The idea here was to show my aims clearly, but it quickly became evident that this approach was not working - there were too many characters and colours and it was hard to follow what was happening ( as seen below ). On top of this, the data was presenting an issue. For most characters, there wasn't much movement from year to year, and for most characters they were only in the rankings once and never re-appeared. This results in the plot being both overcrowded within the legend, and dull with movement - an example of a bad visualisation.
 
 ```{r}
+#Plotting an alluvial with the previous data. 
 ggplot(
   data = sanrio_clean,
   aes(x = year, stratum = ranking, alluvium = interaction(character, country),
@@ -81,17 +101,20 @@ ggplot(
 After reflecting upon my data further, I realised that the clearest way to show my data would involve transforming it. Including all aspects of the data - the year, the specific ranking placement, the character name and the country, would not create a good visualisation. Instead, I had the idea of transforming the data into how many times each character had been within the ' top 3' rankings, separated by country. This would give each character more information to work with and show across years.
 
 ```{r}
+#Removing data from before 2020, and collecting information on how often each character was within the top 3 by year. Creating a new column for this infomration. 
 
 sanrio_top3 <- sanrio_clean %>%
-  filter(year > 2019) %>% # Removing data from before 2020, as this was inconsistent. 
+  filter(year > 2019) %>% 
   group_by(year, character, country) %>%
   summarise(
     total_top3 = n(),
     ranking = paste(sort(ranking), collapse = ", "),
     .groups = "drop"
   )
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Quick view of the wrangled data.
 
-summary(sanrio_top3)
+glimpse(sanrio_top3)
 ```
 
 ## Final visualisation
@@ -103,20 +126,21 @@ Here, I created an interactive, animated bar chart using plotly. This helped my 
 -   Showcasing preference by region ( each chart is split by country )
 
 ```{r}
+#Plotting an interactive, animated bar chart with plotly. With the new variable of total_top3 on the X axis, character name on the Y axis, coloured by country and framed by year. Adding ranking into the hover info for further detail.
 
 plot_ly(sanrio_top3, 
         x = ~total_top3, 
         y = ~character, 
-        color = ~country, # how the bar chart is seperated 
-        frame = ~year,  # year is the interactive slider
+        color = ~country, 
+        frame = ~year, 
         type = 'bar', 
         orientation = 'h', 
         text = ~paste("Character:", character,
                       "<br>Country:", country,
-              "<br>Ranking:", ranking), # Can show the specific ranking when users hover over the data. 
+              "<br>Ranking:", ranking), 
         hoverinfo = 'text') %>%
   layout(title = "Top Characters per Year by Country",
-         xaxis = list(title = "Number of times in Top 3"),
+         xaxis = list(title = "Number of times each character is in the top 3"),
          yaxis = list(title = ""),
          barmode = 'stack') %>%
   animation_opts(frame = 1000, transition = 500, redraw = TRUE) %>%
