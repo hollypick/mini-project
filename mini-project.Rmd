@@ -1,10 +1,13 @@
 ---
 title: "mini-project"
 output: html_document
+self_contained: true
 date: "2025-12-05"
 ---
 
-## Mini Project Visualisation
+# Mini Project Visualisation
+
+------------------------------------------------------------------------
 
 Sanrio is a major Japanese entertainment company, with a market cap of £6.42 billion. Founded in 1960 under Shintaro Tsuji, the company has created over 450 characters including the global icon Hello Kitty. Beyond character design, the company’s influence extends through the production of theme parks, merchandising, animated films, video games, and collaborations with high-profile brands such as Starbucks, Adidas, and Swarovski. To engage its’ international fanbase, Sanrio launched the Sanrio Character Ranking event in 1986, originally published in a Japanese newspaper and now conducted online. This attracts widespread participation ( 65 million votes in 2025 ) and generates rich data that reveals trends of fan preferences across countries and regions.
 
