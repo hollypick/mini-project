@@ -1,0 +1,38 @@
+/* Background and text color */
+body {
+  background-color: #fce3ea;  /* light blue background */
+  color: #94284e;             /* dark gray text */
+  font-family: Arial, sans-serif;
+}
+
+/* Headings */
+h1 {
+  color: #f5828f;  /* bright orange */
+}
+
+h2 {
+  color: #f5828f;  /* dodger blue */
+}
+
+h3 {
+  color: #f5828f;  /* lime green */
+}
+
+/* Paragraphs */
+p {
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* Code blocks */
+pre, code {
+  background-color: #faf0e6 ;
+  color: #ff709f;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* Links */
+a {
+  color: #ff69b4;  /* hot pink */
+}

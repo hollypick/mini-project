@@ -1,8 +1,10 @@
 ---
-title: "mini-project"
+title: "Project"
+subtitle: " - Holly Pick  "
 output: html_document
 self_contained: true
 date: "2025-12-05"
+css: custom.css
 ---
 
 # Mini Project Visualisation
@@ -21,7 +23,7 @@ My aim for this visualisation is to:
 
 ## Sourcing data
 
-The data was sourced online through ( Load in the repository for github that has since gone, explain how and why its gone etc and upload the excel file that I grabbed from git anyways ).
+The data was sourced online through ( Load in the repository for github that has since gone, explain how and why its gone etc and upload the excel file that I grabbed from git anyways ). YAP YAP YAP i need to update this reminder holly update her
 
 ```{r setup, include=FALSE}
 # Set global chunk options
