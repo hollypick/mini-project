@@ -1,8 +1,4 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
+
 
 # An interactive visualisation of Sanrio character popularity over time.
 
