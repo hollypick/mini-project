@@ -62,17 +62,19 @@ library(dplyr)
 
 The data was sourced online through a public GitHub repository created
 by user FannyCheung, that contained 3 sheets - total ranking by year,
-oversea ranking and regional ranking. The origional source has since
-been removed after work on this project, and is no longer online. To
-keep the project reproducible, a copy of the extracted dataset is
-included within the github repository. The data was origionally created
-utilising data from [the official sanrio
+oversea ranking and regional ranking. The original source has since been
+removed after work on this project, and is no longer online. To keep the
+project reproducible, a copy of the extracted dataset is included within
+[the github
+repository](https://github.com/hollypick/mini-project/tree/main/data).
+The data was originally created utilising data from [the official sanrio
 website](https://www.sanrio.co.jp/special/characterranking/2025/en/).
 
 ```{r}
 #Loading the data in
 sanriocharacterranking <- read_excel("../data/sanriocharacterranking.xlsx", 
                                      sheet = 3)
+# Quick check of raw data
 glimpse(sanriocharacterranking)
 ```
 
@@ -92,8 +94,7 @@ countries <- c('United Kingdom', 'United States', 'Taiwan', 'China', 'South Kore
 
 sanrio_clean <- sanriocharacterranking %>% 
   select(year, character, country = `country/region`, ranking) %>% 
-  filter( ranking < 4,
-         country %in% countries)
+  filter(  country %in% countries)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #Just checking it's all in order
 glimpse(sanrio_clean)
@@ -124,7 +125,7 @@ ggplot(
   geom_alluvium(alpha = 0.4) +
   facet_wrap(~ country) +
   labs(
-    title = "Sanrio Character Ranking Changes Over Time by Country",
+    title = "Sanrio character ranking over time by Country",
     x = "Year",
     y = ""
   ) +
@@ -147,10 +148,10 @@ been within the ' top 3' rankings, separated by country. This would give
 each character more information to work with and show across years.
 
 ```{r}
-#Removing data from before 2020, and collecting information on how often each character was within the top 3 by year. Creating a new column for this infomration. 
+#Removing data from before 2020, and collecting information on how often each character was within the top 3 by year. Creating a new column for this information. 
 
 sanrio_top3 <- sanrio_clean %>%
-  filter(year > 2019) %>% 
+  filter(year > 2019, ranking < 4) %>% 
   group_by(year, character, country) %>%
   summarise(
     total_top3 = n(),
@@ -201,27 +202,36 @@ plot_ly(sanrio_top3,
 # Final thoughts!
 
 This plot helps to understand the data in a way that a static chart
-cannot. Due to the amount of elements in the dataset,I had found in the
+cannot. Due to the amount of elements in the data set,I had found in the
 bad visualisation that it would be hard to see patterns clearly with a
-simple plot, utilising plotly helped bring these patterns to light. -
-The seperation of characters makes it easy to see how their popularity
-fluctuates without it feeling crowded. - The country colour coding
-allows quick comparisons by regions. - The slider lets a viewer move
-through time smoothly, making trends easier to follow. - The labels
-allow extra detail (like ranking status) to contribute without
-cluttering the chart. Altogether, these elements are what led to the
-creation of an interactive plot being the right choice.
+simple plot, utilising plotly helped bring these patterns to light.
+
+-   The separation of characters makes it easy to see how their
+    popularity fluctuates without it feeling crowded.
+
+<!-- -->
+
+-   The country colour coding allows quick comparisons by regions.
+
+-   The slider lets a viewer move through time smoothly, making trends
+    easier to follow.
+
+-   The labels allow extra detail (like ranking status) to contribute
+    without cluttering the chart.
+
+Altogether, these elements are what led to the creation of an
+interactive plot being the right choice.
 
 If I were to do this project again, I would include more years or more
-rankings, to create a more complex visualisation. The dataset was quite
+rankings, to create a more complex visualisation. The data set was quite
 bare, and had some inconsistencies within that limited the years and
-rankings I could use. I would search for another dataset, or create my
+rankings I could use. I would search for another data set, or create my
 own, to achieve this.
 
 The final visualisation helped to showcase all of my aims. Character
 trends were evident, with characters such as Cinnamoroll being
 consistently voted in China, yet not as much in South Korea. Individual
-anomolies were also evident, for example U-SA-HA-NA appearing most in
+anomalies were also evident, for example U-SA-HA-NA appearing most in
 2025 coincides with the release of Hello Kitty Island Adventure - a game
 in which the less recognised U-SA-HA-NA appears as a main character.
 Finally,temporal shifts were shown like Cinnamoroll's increase in
