@@ -237,3 +237,6 @@ in which the less recognised U-SA-HA-NA appears as a main character.
 Finally,temporal shifts were shown like Cinnamoroll's increase in
 overall popularity between 2021 and 2024, with a slight decline in 2025
 as more varied characters entered the mix.
+
+Repository for this visualisation can be found
+[here](hollypick/mini-project).
