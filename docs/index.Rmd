@@ -23,9 +23,6 @@ My aim for this visualisation is to:
 
 -   Reveal temporal shifts within fan engagement across different years.
 
-## Sourcing data
-
-The data was sourced online through ( Load in the repository for github that has since gone, explain how and why its gone etc and upload the excel file that I grabbed from git anyways ). YAP YAP YAP i need to update this reminder holly update her
 
 ```{r setup, include=FALSE}
 # Set global chunk options
@@ -47,16 +44,25 @@ library(plotly)
 library(readxl)
 library(dplyr)
 ```
+## Data Origins
 
-## Data Cleaning
-
-The data contains 3 sheets - total ranking by year, oversea ranking and regional ranking. I am interested in the regional rankings, as it contains the year, country, character and rank. I filtered out countries aside from South Korea, China, Taiwan, USA and UK as I felt that these were accurate representations of Sanrio's fanbase.
+The data was sourced online through a public GitHub repository created by user FannyCheung, that contained 3 sheets
+- total ranking by year, oversea ranking and regional ranking. The origional source has since been removed after work on this project,
+and is no longer online. To keep the project reproducible, a copy of the extracted dataset is included within the github repository.
+The data was origionally created utilising data from [the official sanrio website](https://www.sanrio.co.jp/special/characterranking/2025/en/). 
 
 ```{r}
 #Loading the data in
 sanriocharacterranking <- read_excel("~/my6422worksheets/sanriocharacterranking.xlsx", 
                                      sheet = 3)
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+glimpse(sanriocharacterranking)
+
+## Data Cleaning
+
+The data contains 3 sheets. I am interested in the regional rankings, as it contains the year, country, character and rank. 
+I filtered out countries aside from South Korea, China, Taiwan, USA and UK as I felt that these were accurate representations of Sanrio's fanbase.
+
+```{r}
 # Seperating only the countries I want to look into
 
 countries <- c('United Kingdom', 'United States', 'Taiwan', 'China', 'South Korea')
@@ -153,3 +159,19 @@ plot_ly(sanrio_top3,
 
 
 ```
+# Final thoughts!
+This plot helps to understand the data in a way that a static chart cannot. Due to the amount of elements in the dataset,I had found in the bad 
+visualisation that it would be hard to see patterns clearly with a simple plot, utilising plotly helped bring these patterns to light.
+- The seperation of characters makes it easy to see how their popularity fluctuates without it feeling crowded.
+- The country colour coding allows quick comparisons by regions.
+- The slider lets a viewer move through time smoothly, making trends easier to follow. 
+- The labels allow extra detail (like ranking status) to contribute without cluttering the chart.
+Altogether, these elements are what led to the creation of an interactive plot being the right choice. 
+
+If I were to do this project again, I would include more years or more rankings, to create a more complex visualisation. The dataset was quite 
+bare, and had some inconsistencies within that limited the years and rankings I could use. I would search for another dataset, or create my own, to achieve this.
+
+The final visualisation helped to showcase all of my aims. Character trends were evident, with characters such as Cinnamoroll being consistently 
+voted in China, yet not as much in South Korea. Individual anomolies were also evident, for example U-SA-HA-NA appearing most in 2025 coincides with
+the release of Hello Kitty Island Adventure - a game in which the less recognised U-SA-HA-NA appears as a main character. Finally,temporal shifts were shown like Cinnamoroll's
+increase in overall popularity between 2021 and 2024, with a slight decline in 2025 as more varied characters entered the mix. 
