@@ -35,7 +35,7 @@ plotly.
 
 Author : Holly Pick
 
-Contact email: [hpick1\@sheffield.ac.uk](#0){.email}
+Contact email: hpick1@sheffield.ac.uk
 
 \~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~
 
